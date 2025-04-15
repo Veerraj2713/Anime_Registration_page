@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime World Registration</title>
+    <style>
+        /* Google Font for anime-style text */
+        @import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&family=Poppins:wght@300;400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Anime sparkle effects */
+        .sparkle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle 2s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 3px solid #ff6b8b;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff6b8b, #ff8e53);
+            z-index: -2;
+            filter: blur(20px);
+            opacity: 0.6;
+            animation: gradientBG 8s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            color: #ff4d7a;
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Mochiy Pop One', sans-serif;
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #ff6b8b, #ff8e53);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ff4d7a;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #ffb6c1;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #ff6b8b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.3);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            color: #ff6b8b;
+            font-size: 20px;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff6b8b, #ff8e53);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Mochiy Pop One', sans-serif;
+            box-shadow: 0 4px 15px rgba(255, 107, 139, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 107, 139, 0.6);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .error-message {
+            color: #ff1a4a;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #ff4d7a;
+            font-size: 18px;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 214, 230, 0.5);
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .anime-character {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background-image: url('https://i.imgur.com/JR7iF0r.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            bottom: -30px;
+            right: -30px;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        .terms {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+
+        .terms a {
+            color: #ff6b8b;
+            text-decoration: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .anime-character {
+                width: 80px;
+                height: 80px;
+                bottom: -20px;
+                right: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Anime World</h1>
+        
+        <form id="registrationForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Your anime nickname" required>
+                <div class="error-message" id="username-error">Username must be at least 4 characters</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="your@email.com" required>
+                <div class="error-message" id="email-error">Please enter a valid email</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+                <div class="error-message" id="password-error">Password must be at least 6 characters</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" placeholder="••••••••" required>
+                <div class="error-message" id="confirm-password-error">Passwords don't match</div>
+            </div>
+            
+            <button type="submit" id="submit-btn">
+                Sign Up <span>ヽ(•̀ω•́ )ゝ✧</span>
+            </button>
+            
+            <div class="terms">
+                By registering, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>
+            </div>
+            
+            <div class="success-message" id="success-message">
+                <div>Registration successful! ヽ(^◇^*)/</div>
+                <div>Welcome to Anime World!</div>
+            </div>
+        </form>
+        
+        <div class="anime-character"></div>
+    </div>
+
+    <script>
+        // Create sparkle effects
+        document.addEventListener('mousemove', function(e) {
+            if(Math.random() > 0.95) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.style.left = e.pageX + 'px';
+                sparkle.style.top = e.pageY + 'px';
+                sparkle.style.width = Math.random() * 10 + 5 + 'px';
+                sparkle.style.height = sparkle.style.width;
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 2000);
+            }
+        });
+
+        // Form validation
+        const form = document.getElementById('registrationForm');
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm-password');
+        const submitBtn = document.getElementById('submit-btn');
+        
+        // Show error function
+        function showError(input, message) {
+            const errorElement = document.getElementById(`${input.id}-error`);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            input.style.borderColor = '#ff1a4a';
+        }
+        
+        // Hide error function
+        function hideError(input) {
+            const errorElement = document.getElementById(`${input.id}-error`);
+            errorElement.style.display = 'none';
+            input.style.borderColor = '#ffb6c1';
+        }
+        
+        // Validate email
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // Event listeners for real-time validation
+        username.addEventListener('input', () => {
+            if(username.value.length < 4) {
+                showError(username, 'Username must be at least 4 characters');
+            } else {
+                hideError(username);
+            }
+        });
+        
+        email.addEventListener('input', () => {
+            if(!isValidEmail(email.value)) {
+                showError(email, 'Please enter a valid email');
+            } else {
+                hideError(email);
+            }
+        });
+        
+        password.addEventListener('input', () => {
+            if(password.value.length < 6) {
+                showError(password, 'Password must be at least 6 characters');
+            } else {
+                hideError(password);
+            }
+            
+            // Check password match if confirm password has value
+            if(confirmPassword.value) {
+                if(password.value !== confirmPassword.value) {
+                    showError(confirmPassword, 'Passwords dont match');
+                } else {
+                    hideError(confirmPassword);
+                }
+            }
+        });
+        
+        confirmPassword.addEventListener('input', () => {
+            if(password.value !== confirmPassword.value) {
+                showError(confirmPassword, 'Passwords dont match');
+            } else {
+                hideError(confirmPassword);
+            }
+        });
+        
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            
+            // Validate username
+            if(username.value.length < 4) {
+                showError(username, 'Username must be at least 4 characters');
+                isValid = false;
+            }
+            
+            // Validate email
+            if(!isValidEmail(email.value)) {
+                showError(email, 'Please enter a valid email');
+                isValid = false;
+            }
+            
+            // Validate password
+            if(password.value.length < 6) {
+                showError(password, 'Password must be at least 6 characters');
+                isValid = false;
+            }
+            
+            // Validate password match
+            if(password.value !== confirmPassword.value) {
+                showError(confirmPassword, 'Passwords dont match');
+                isValid = false;
+            }
+            
+            // If form is valid
+            if(isValid) {
+                // Show loading state
+                submitBtn.innerHTML = 'Registering... <span>(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧</span>';
+                submitBtn.disabled = true;
+                
+                // Simulate API call
+                setTimeout(() => {
+                    // Hide form
+                    form.style.display = 'none';
+                    // Show success message
+                    document.getElementById('success-message').style.display = 'block';
+                    
+                    // In a real app, you would submit the data to your server here
+                    console.log('Registration data:', {
+                        username: username.value,
+                        email: email.value,
+                        password: password.value
+                    });
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>
